@@ -1,3 +1,31 @@
+export function LogoIcon({ className = "w-8 h-8" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#00d4ff" />
+          <stop offset="100%" stopColor="#8b5cf6" />
+        </linearGradient>
+        <linearGradient id="orbit-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#00d4ff" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.6" />
+        </linearGradient>
+      </defs>
+      {/* Central core */}
+      <circle cx="20" cy="20" r="6" fill="url(#logo-gradient)" />
+      <circle cx="20" cy="20" r="8" stroke="url(#logo-gradient)" strokeWidth="0.5" fill="none" opacity="0.4" />
+      {/* Orbit ring 1 */}
+      <ellipse cx="20" cy="20" rx="14" ry="14" stroke="url(#orbit-gradient)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
+      {/* Orbit ring 2 — tilted */}
+      <ellipse cx="20" cy="20" rx="18" ry="10" stroke="url(#orbit-gradient)" strokeWidth="0.7" fill="none" transform="rotate(-30 20 20)" strokeDasharray="3 5" />
+      {/* Satellite nodes */}
+      <circle cx="34" cy="20" r="2" fill="#00d4ff" opacity="0.8" />
+      <circle cx="10" cy="10" r="1.5" fill="#8b5cf6" opacity="0.7" />
+      <circle cx="28" cy="32" r="1.5" fill="#06b6d4" opacity="0.6" />
+    </svg>
+  );
+}
+
 export function CodeIcon({ className = "w-6 h-6" }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
