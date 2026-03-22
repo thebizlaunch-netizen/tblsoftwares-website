@@ -142,7 +142,7 @@ export default async function Home() {
                   </div>
                   <p className="text-xs text-gray-400 mb-4 leading-relaxed">{product.description?.substring(0, 100)}</p>
                   <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                    <span className="text-xs text-orange-400 font-medium">{product.price_gbp > 0 ? `\u00A3${product.price_gbp}` : "Free trial"}</span>
+                    <span className="text-xs text-orange-400 font-medium">{(product.price_gbp ?? 0) > 0 ? `\u00A3${product.price_gbp}` : "Free trial"}</span>
                     <span className="text-xs text-gray-600 group-hover:text-orange-400">Launch &#8594;</span>
                   </div>
                 </a>
@@ -185,7 +185,7 @@ export default async function Home() {
                   <p className="text-xs text-gray-400 mb-4 leading-relaxed">{agent.description?.substring(0, 100)}</p>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 text-[10px] font-medium border border-green-500/20">Live</span>
-                    <span className="text-xs text-orange-400">{agent.price_gbp > 0 ? `\u00A3${agent.price_gbp}` : "Free trial"}</span>
+                    <span className="text-xs text-orange-400">{(agent.price_gbp ?? 0) > 0 ? `\u00A3${agent.price_gbp}` : "Free trial"}</span>
                   </div>
                 </a>
               ))}
