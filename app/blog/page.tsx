@@ -11,8 +11,8 @@ export default async function BlogPage() {
 
   return (
     <div className="relative min-h-screen pt-16">
-      <div className="absolute inset-0 dot-grid opacity-20" />
-      <div className="bg-glow-orb w-[400px] h-[400px] bg-[#00d4ff] top-[10%] right-[-5%] opacity-[0.06]" />
+      <div className="absolute inset-0 grid-bg opacity-20" />
+      <div className="hero-orb w-[400px] h-[400px] bg-[#00d4ff] top-[10%] right-[-5%] opacity-[0.06]" />
 
       <section className="relative py-24 z-10">
         <div className="max-w-4xl mx-auto px-6">
