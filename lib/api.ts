@@ -29,6 +29,13 @@ export interface Product {
   description: string;
   status: string;
   created_at: string;
+  deployed_url: string;
+  checkout_url: string;
+  price_gbp: number | null;
+  stripe_product_id: string;
+  section: string;
+  category: string;
+  tags: string;
   assets: { type: string; url: string }[];
   content: { type: string; title: string; body: string }[];
 }
@@ -69,6 +76,103 @@ export async function fetchProducts(): Promise<Product[]> {
     return data.products || [];
   } catch {
     return [];
+  }
+}
+
+// ── Section-specific fetch functions ──────────────────────────────
+
+export async function fetchApps(category?: string): Promise<Product[]> {
+  try {
+    const url = category && category !== 'All'
+      ? `${API_URL}/api/v1/public/apps?category=${encodeURIComponent(category)}`
+      : `${API_URL}/api/v1/public/apps`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    return data.products || [];
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchAgents(category?: string): Promise<Product[]> {
+  try {
+    const url = category && category !== 'All'
+      ? `${API_URL}/api/v1/public/agents?category=${encodeURIComponent(category)}`
+      : `${API_URL}/api/v1/public/agents`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    return data.agents || [];
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchSoftwares(category?: string): Promise<Product[]> {
+  try {
+    const url = category && category !== 'All'
+      ? `${API_URL}/api/v1/public/softwares?category=${encodeURIComponent(category)}`
+      : `${API_URL}/api/v1/public/softwares`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    return data.softwares || [];
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchPlatforms(category?: string): Promise<Product[]> {
+  try {
+    const url = category && category !== 'All'
+      ? `${API_URL}/api/v1/public/platforms?category=${encodeURIComponent(category)}`
+      : `${API_URL}/api/v1/public/platforms`;
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    return data.platforms || [];
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchCategories(): Promise<string[]> {
+  try {
+    const res = await fetch(`${API_URL}/api/v1/public/categories`, { next: { revalidate: 300 } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    if (Array.isArray(data.categories)) {
+      // Could be [{name, slug}] or plain strings
+      return data.categories.map((c: string | { name: string }) =>
+        typeof c === 'string' ? c : c.name
+      );
+    }
+    return ['All', 'Business', 'Finance', 'Healthcare', 'Legal', 'Education',
+      'Real Estate', 'Travel & Hospitality', 'Recruitment', 'E-Commerce',
+      'Fitness & Wellness', 'Food & Restaurant', 'Productivity', 'Marketing',
+      'Developer Tools', 'Communication', 'Analytics', 'Security'];
+  } catch {
+    return ['All', 'Business', 'Finance', 'Healthcare', 'Legal', 'Education',
+      'Real Estate', 'Travel & Hospitality', 'Recruitment', 'E-Commerce',
+      'Fitness & Wellness', 'Food & Restaurant', 'Productivity', 'Marketing',
+      'Developer Tools', 'Communication', 'Analytics', 'Security'];
+  }
+}
+
+export async function fetchCatalogue(): Promise<{
+  app: Product[];
+  agent: Product[];
+  software: Product[];
+  platform: Product[];
+}> {
+  try {
+    const res = await fetch(`${API_URL}/api/v1/public/catalogue`, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    const data = await res.json();
+    return data.catalogue || { app: [], agent: [], software: [], platform: [] };
+  } catch {
+    return { app: [], agent: [], software: [], platform: [] };
   }
 }
 
