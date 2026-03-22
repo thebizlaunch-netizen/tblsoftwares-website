@@ -15,9 +15,9 @@ export default async function AgentsPage() {
 
   return (
     <div className="relative min-h-screen pt-16">
-      <div className="absolute inset-0 dot-grid opacity-20" />
-      <div className="bg-glow-orb w-[500px] h-[500px] bg-[#00d4ff] top-[5%] left-[-10%] opacity-[0.08]" />
-      <div className="bg-glow-orb w-[400px] h-[400px] bg-[#8b5cf6] bottom-[10%] right-[-10%] opacity-[0.06]" />
+      <div className="absolute inset-0 grid-bg opacity-20" />
+      <div className="hero-orb w-[500px] h-[500px] bg-[#00d4ff] top-[5%] left-[-10%] opacity-[0.08]" />
+      <div className="hero-orb w-[400px] h-[400px] bg-[#8b5cf6] bottom-[10%] right-[-10%] opacity-[0.06]" />
 
       <section className="relative py-24 z-10">
         <div className="max-w-7xl mx-auto px-6">
