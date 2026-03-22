@@ -3,110 +3,115 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { LogoIcon, MenuIcon, XIcon } from './icons';
+import { LogoIcon } from './icons';
 
-const links = [
+const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/products', label: 'Products' },
-  { href: 'https://agents.tblsoftwares.com', label: 'AI Agents', external: true },
-  { href: '/blog', label: 'Blog' },
+  { href: '/apps', label: 'Apps' },
+  { href: '/agents', label: 'AI Agents' },
+  { href: '/softwares', label: 'Softwares' },
+  { href: '/platforms', label: 'Platforms' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(255,255,255,0.06)] bg-[#050508]/80 backdrop-blur-2xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#050508]/80 border-b border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 group shrink-0">
           <LogoIcon className="w-9 h-9 transition-transform group-hover:scale-110" />
-          <span className="font-semibold text-lg font-[family-name:var(--font-outfit)] tracking-tight hidden sm:block">
+          <span className="font-semibold font-[family-name:var(--font-outfit)] text-white text-lg hidden sm:block tracking-tight">
             TBL Softwares
           </span>
         </Link>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map(({ href, label, external }) => {
-            const isActive = !external && pathname === href;
-            const cls = `text-sm font-medium transition-colors relative ${
-              isActive ? 'text-white' : 'text-[#94a3b8] hover:text-white'
-            }`;
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === '/'
+                ? pathname === '/'
+                : pathname.startsWith(link.href);
 
-            return external ? (
-              <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cls}
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+                  isActive
+                    ? 'text-[#00d4ff] bg-[#00d4ff]/10'
+                    : 'text-[#94a3b8] hover:text-white hover:bg-white/[0.04]'
+                }`}
               >
-                {label}
-              </a>
-            ) : (
-              <Link key={href} href={href} className={cls}>
-                {label}
-                {isActive && (
-                  <span className="absolute -bottom-[21px] left-0 right-0 h-[1px] bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6]" />
-                )}
+                {link.label}
               </Link>
             );
           })}
-          <Link
-            href="/contact"
-            className="btn-primary text-sm !py-2 !px-5"
-          >
-            Get in Touch
-          </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button className="md:hidden text-[#94a3b8] hover:text-white transition-colors" onClick={() => setOpen(!open)}>
-          {open ? <XIcon /> : <MenuIcon />}
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden p-2 text-[#94a3b8] hover:text-white"
+          aria-label="Toggle menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {mobileOpen ? (
+              <>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </>
+            ) : (
+              <>
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </>
+            )}
+          </svg>
         </button>
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden border-t border-[rgba(255,255,255,0.06)] bg-[#050508]/95 backdrop-blur-2xl">
-          <div className="px-6 py-6 flex flex-col gap-5">
-            {links.map(({ href, label, external }) => {
-              const isActive = !external && pathname === href;
-              const cls = `text-sm font-medium transition-colors ${
-                isActive ? 'text-white' : 'text-[#94a3b8]'
-              }`;
+      {mobileOpen && (
+        <div className="md:hidden border-t border-white/[0.06] bg-[#050508]/95 backdrop-blur-xl">
+          <div className="px-4 py-3 space-y-1">
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(link.href);
 
-              return external ? (
-                <a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  className={cls}
-                >
-                  {label}
-                </a>
-              ) : (
+              return (
                 <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className={cls}
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    isActive
+                      ? 'text-[#00d4ff] bg-[#00d4ff]/10'
+                      : 'text-[#94a3b8] hover:text-white hover:bg-white/[0.04]'
+                  }`}
                 >
-                  {label}
+                  {link.label}
                 </Link>
               );
             })}
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="btn-primary text-sm text-center !py-2.5"
-            >
-              Get in Touch
-            </Link>
           </div>
         </div>
       )}
