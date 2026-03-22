@@ -44,7 +44,7 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? 'text-[#00d4ff] bg-[#00d4ff]/10'
+                    ? 'text-orange-400 bg-orange-400/10'
                     : 'text-[#94a3b8] hover:text-white hover:bg-white/[0.04]'
                 }`}
               >
@@ -104,7 +104,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     isActive
-                      ? 'text-[#00d4ff] bg-[#00d4ff]/10'
+                      ? 'text-orange-400 bg-orange-400/10'
                       : 'text-[#94a3b8] hover:text-white hover:bg-white/[0.04]'
                   }`}
                 >
